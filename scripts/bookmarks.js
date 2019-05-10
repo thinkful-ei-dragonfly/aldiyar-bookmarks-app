@@ -23,6 +23,9 @@ const bookmarksList = (function(){
       <button class="bookmark-delete js-item-delete">
         <span class="button-label">delete</span>
       </button>
+      <button class="bookmark-expand js-item-expand">
+        <span class="button-lanel">expand</span>
+      </button>
     </li>`;
   }
 
