@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>BUKmrk</title>
+  <link rel="stylesheet" href="styles/index.css">
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class='container'>
+    <h1>add bookmark</h1>
+    <section class='add-form'>
+        <form class='js-form'>
+          <input type='text' id='js-title' name='title' placeholder='add title' required>
+          <input type='text' id='js-url' name='url' placeholder='add URL' required>
+          <input type='text' id='js-desc' name='description' placeholder='description' required>
+          <input type='text' id='js-rating' name='rating' placeholder='from 1 to 5' required>
+          <button type=submit'>Submit</button> 
+          <button>Cancel</button>
+        </form>
+      </section>
+    </div>
+    <div class='list' >
+      <ul class="js-bookmarks-list">
+
+      </ul>
+  </div>
+  <script type="text/javascript" src="scripts/api.js"></script>
+  <script type="text/javascript" src="scripts/store.js"></script>
+  <script type="text/javascript" src="scripts/bookmarks.js"></script>
+  <script type="text/javascript" src="scripts/index.js"></script>
+</body>
+</html>
