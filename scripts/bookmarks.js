@@ -14,12 +14,16 @@ const bookmarksList = (function(){
   }
 
   function generateItemElement(item) {
+    let expandedContent = '';
+    if (item.expanded) {
+      expandedContent = `<a href='${item.url}'>Visit site</a>
+      <p>${item.desc}</p>`;
+    }
     return `
-      <li class='js-item-element' data-item-id='${item.id}'>
+      <li class='item-element js-item-element' data-item-id='${item.id}'>
       ${item.title}
+      ${expandedContent}
       <p>Rating ${item.rating}</p>
-      <a href='${item.url}' class='hidden'>Visit site</a>
-      <p>${item.desc}</p>
       <button class="bookmark-delete js-item-delete">
         <span class="button-label">delete</span>
       </button>
@@ -47,6 +51,10 @@ const bookmarksList = (function(){
     renderError();
     let items = [ ...store.items ];
     console.log('`render` ran');
+
+    if(store.ratingFilter) {
+      items = items.filter(item => item.rating>=store.ratingFilter);
+    }
     const bookmarksListString = generateBookmarksListString(items);
     $('.js-bookmarks-list').html(bookmarksListString);
   }
@@ -58,10 +66,6 @@ const bookmarksList = (function(){
       const newItemURL = $('#js-url').val();
       const newItemDesc = $('#js-desc').val();
       const newItemRating = $('#js-rating').val();
-      console.log(NewItemTitle)
-      console.log(newItemURL)
-      console.log(newItemDesc)
-      console.log(newItemRating)
       const Item = {
         title: NewItemTitle,
         url: newItemURL,
@@ -77,7 +81,7 @@ const bookmarksList = (function(){
           store.setError(err.message);
           renderError();
         });
-
+      console.log('Bookmark created!')
     });
   }
 
@@ -101,13 +105,43 @@ const bookmarksList = (function(){
           store.setError(err.message);
           renderError();
         });
+        console.log('Item deleted!:(')
     });
   }
 
 
+  function handleExpandItemClicked() {
+    $('.js-bookmarks-list').on('click', '.js-item-expand', event => {
+      const id = getItemIdFromElement(event.currentTarget);
+      const item = store.findById(id);
+      item.expanded = !item.expanded;
+      render();
+    });
+  }
+
+  function handleRatingValueFilter() {
+    $('.js-rating-filter').on('submit', event => {
+      event.preventDefault();
+      const ratingValue = $('#js-filter-value').val();
+      store.ratingFilter = ratingValue;
+      render();
+    });
+  }
+
+  function handleCloseError() {
+    $('.error-container').on('click', '#cancel-error', () => {
+      store.setError(null);
+      renderError();
+    })
+  }
+  
+
   function bindEventListeners() {
     handleNewItemSubmit();
     handleDeleteItemClicked();
+    handleExpandItemClicked();
+    handleRatingValueFilter();
+    handleCloseError();
   }
 
   return {

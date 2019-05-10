@@ -2,8 +2,9 @@
 const store = (function(){
  
   const addItem = function(item) {
+    item.expanded = false;
     this.items.push(item);
-  }
+  };
   
   const setError = function(error) {
     this.error = error;
